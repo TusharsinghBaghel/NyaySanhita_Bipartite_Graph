@@ -2,4 +2,3 @@ streamlit
 sentence_transformers
 networkx
 matplotlib
-pickle
