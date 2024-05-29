@@ -1,0 +1,6 @@
+streamlit
+sentence_transformers
+csv
+networkx
+matplotlib
+pickle
