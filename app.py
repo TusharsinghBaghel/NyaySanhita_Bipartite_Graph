@@ -53,7 +53,7 @@ with open('ns_embeddings.pkl', 'rb') as f:
 
 # Streamlit app
 
-st.markdown("<h1 style='color:white; text-align:center; font-weight:bold;'>IPC to NyaySanhita</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color:white; text-align:center; font-weight:bold;'>IPC to Bhartiya Nyay Sanhita</h1>", unsafe_allow_html=True)
 
 # # #CSS
 st.markdown("""
