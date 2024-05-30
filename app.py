@@ -94,7 +94,7 @@ st.markdown("""
 
 # Input for threshold value
 st.markdown(
-    "<p style='color:white;'>Select threshold value: Greater threshold -> stricter similarity check</p>",
+    "<p style='color:white;'>Select % Similarity threshold: Greater threshold -> stricter similarity check</p>",
     unsafe_allow_html=True
 )
 threshold = st.slider('.', min_value=0.0, value=70.0, max_value=100.0)/100.0
@@ -103,14 +103,18 @@ threshold = st.slider('.', min_value=0.0, value=70.0, max_value=100.0)/100.0
 def print_similar_ns_sections(ipc_sec):
     node = "ipc_" + ipc_sec
     similars = list(Graph.neighbors(node))
-    st.write(f"Sections similar to IPC section {ipc_sec}:")
-    for similar in similars:
-        sim_index = int(similar.replace("ns_", ""))
-        section = ns_sections[sim_index-1]
-        similarity_val = Graph[node][similar]['weight']
-        st.write(f"Nyay Sanhita Section: {section[0]}, Similarity: {similarity_val * 100:.2f}%")
-        st.write(section[1])
-        st.write('---')
+    if not similars:
+        st.write(f"No similar Nyay Sanhita sections found: Try lowering the similarity threshold using the above slider")
+        st.write("NOTE: Too low similarity % may lead to incorrect matchings")
+    else:
+        st.write(f"Sections similar to IPC section {ipc_sec}:")
+        for similar in similars:
+            sim_index = int(similar.replace("ns_", ""))
+            section = ns_sections[sim_index-1]
+            similarity_val = Graph[node][similar]['weight']
+            st.write(f"Nyay Sanhita Section: {section[0]}, Similarity: {similarity_val * 100:.2f}%")
+            st.write(section[1])
+            st.write('---')
 
 # Function to plot bipartite graph
 def plot_bipartite_graph():
