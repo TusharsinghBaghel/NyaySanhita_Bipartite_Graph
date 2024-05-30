@@ -97,7 +97,7 @@ st.markdown(
     "<p style='color:white;'>Select threshold value: Greater threshold -> stricter similarity check</p>",
     unsafe_allow_html=True
 )
-threshold = st.slider('', 0.0, 1.0, 0.7)
+threshold = st.slider('.', 0.0, 1.0, 0.7)
 
 # Function to print similar sections
 def print_similar_ns_sections(ipc_sec):
