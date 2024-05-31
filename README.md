@@ -14,7 +14,7 @@ This tool is designed to facilitate the transition from the Indian Penal Code (I
 
 ## Bipartite Mapping Visualization
 
-![Bipartite Mapping Visualization](./0.7.png)
+![Bipartite Mapping Visualization](./0.7a.png)
 
 
 Link to the deployed streamlit application: https://nyaysanhitabipartitegraph-pvkgjyydo3iahrucb2eutf.streamlit.app/
