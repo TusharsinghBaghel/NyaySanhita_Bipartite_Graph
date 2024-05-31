@@ -12,4 +12,9 @@ This tool is designed to facilitate the transition from the Indian Penal Code (I
 - **Bipartite Graph**: Constructs a bipartite graph to represent the similarity relationships, with a user-defined threshold for similarity scores.
 - **Streamlit Visualization**: Offers an interactive visualization of the bipartite graph and a search function to find related Nyay Sanhita sections for a given IPC section.
 
+# Bipartite Mapping Visualization
+
+![Bipartite Mapping Visualization](./0.8.png)
+
+
 Link to the deployed streamlit application: https://nyaysanhitabipartitegraph-pvkgjyydo3iahrucb2eutf.streamlit.app/
