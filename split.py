@@ -1,4 +1,8 @@
-import fitz  # PyMuPDF
+#This is the python script i created for splitting and creation of the IPC and Bhartiya Nyaya Sanhita sections dataset
+#The logic is simple: Every new section in both pdfs starts with a bold heading and an integer section number.
+#So splitting condition= Split whenever you encounter a bold integer
+#Further minimal cleaning, editing and indexing was done manually
+import fitz  # install PyMuPDF if not exists
 import csv
 
 def is_bold(span):
@@ -13,7 +17,7 @@ def starts_with_integer(text):
     # Check if the text starts with an integer
     return text and text[0].isdigit()
 
-def split_text_on_bold_and_integer(pdf_path):
+def split_text(pdf_path):
     pdf_document = fitz.open(pdf_path)
     sections = []
     current_section = ""
@@ -34,7 +38,6 @@ def split_text_on_bold_and_integer(pdf_path):
                     else:
                         current_section += text  # Continue current section
 
-    # Add the last section if it exists
     if current_section:
         sections.append(current_section.strip())
 
@@ -48,10 +51,9 @@ def save_sections_to_csv(sections, csv_path):
         for i, section in enumerate(sections, start=1):
             writer.writerow([i, section])
 
-# Example usage
-pdf_path = "IPC_edited.pdf"
-csv_path = "IPC_sections.csv"
-split_sections = split_text_on_bold_and_integer(pdf_path)
+pdf_path = "Sections_PDF_path" #change to your pdf path
+csv_path = "output_dataset.csv" #the csv file path that will be created
+split_sections = split_text(pdf_path)
 save_sections_to_csv(split_sections, csv_path)
 
 print(f"Sections have been saved to {csv_path}")
