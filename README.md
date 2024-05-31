@@ -1,7 +1,7 @@
 # IPC to Bhartiya Nyay Sanhita Mapping Tool
 
 ## Introduction
-This tool is designed to facilitate the transition from the Indian Penal Code (IPC) to the Bhartiya Nyay Sanhita, which will come into effect from 1st July 2024. It uses NLP techniques to create embeddings using the Sentence-transformer embedding model for legal sections and employs cosine similarity function of pytorch to map corresponding sections between the two codes. The tool features a Streamlit application that provides visualizations and search functionalities.
+This tool is designed to facilitate the transition from the Indian Penal Code (IPC) to the Bhartiya Nyay Sanhita in the Indian Judiciary, which will come into effect from 1st July 2024. It uses NLP techniques to create embeddings using the Sentence-transformer embedding model for legal sections and employs cosine similarity function of pytorch to map corresponding sections between the two codes. The tool features a Streamlit application that provides visualizations and search functionalities.
 
 ## Creation of sections dataset
 "split.py" contains the script for splitting and creation of the sections dataset for both the documents.
