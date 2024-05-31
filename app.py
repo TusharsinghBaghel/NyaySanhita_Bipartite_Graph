@@ -54,7 +54,7 @@ with open('ns_embeddings.pkl', 'rb') as f:
 
 # st.markdown("<h1 style='color:white; text-align:center; font-weight:bold;'>IPC to Bhartiya Nyay Sanhita</h1>", unsafe_allow_html=True)
 st.markdown("""
-    <h1 style='color:#ffffff; text-align:center; background-color:#333; padding:3px 15px; border-radius:10px; border:4px solid #4CAF50; margin-bottom:25px;'>
+    <h1 style='color:#ffffff; text-align:center; background-color:#333; padding:4px 15px; border-radius:10px; border:4px solid #4CAF50; margin-bottom:25px;'>
         Indian Penal Code to Bhartiya Nyay Sanhita
     </h1>""", unsafe_allow_html=True)
 
