@@ -1,10 +1,9 @@
 import streamlit as st
-from sentence_transformers import SentenceTransformer, util
+from sentence_transformers import SentenceTransformer, util #Embedding model
 import csv
-import networkx as nx
-import matplotlib.pyplot as plt
-import pickle
-from pprint import pprint
+import networkx as nx # A utility for creating graphs
+import matplotlib.pyplot as plt  # for plotting
+import pickle #Used pickle for storing the embeddings locally as .pkl file
 
 csv_file_path = 'ns_sections_final.csv'
 csv_file_path2 = 'IPC_sections_final.csv'
@@ -44,7 +43,7 @@ with open(csv_file_path2, mode='r', encoding='utf-8') as file:
 #     pickle.dump(ns_embeddings, f)
 
 
-# Load embeddings
+# Loading embeddings
 with open('ipc_embeddings.pkl', 'rb') as f:
     ipc_embeddings = pickle.load(f)
 
@@ -53,8 +52,11 @@ with open('ns_embeddings.pkl', 'rb') as f:
 
 # Streamlit app
 
-st.markdown("<h1 style='color:white; text-align:center; font-weight:bold;'>IPC to Bhartiya Nyay Sanhita</h1>", unsafe_allow_html=True)
-
+# st.markdown("<h1 style='color:white; text-align:center; font-weight:bold;'>IPC to Bhartiya Nyay Sanhita</h1>", unsafe_allow_html=True)
+st.markdown("""
+    <h1 style='color:#ffffff; text-align:center; background-color:#2c3e50; padding:10px; border-radius:10px; border:2px solid #18bc9c;'>
+        Indian Penal Code to Bhartiya Nyay Sanhita
+    </h1>""", unsafe_allow_html=True)
 # # #CSS
 st.markdown("""
     <style>
@@ -144,7 +146,6 @@ for i, ipc_embedding in enumerate(ipc_embeddings):
 # Create columns for layout
 col1, col2, col3 = st.columns([3, 4, 3])
 
-# Place the "Plot Bipartite Graph" button in the right column
 with col2:
     if st.button('Visualise the Graph Mapping'):
         plot_bipartite_graph()
