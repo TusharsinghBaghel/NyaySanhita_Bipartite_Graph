@@ -44,10 +44,10 @@ with open(csv_file_path2, mode='r', encoding='utf-8') as file:
 
 
 # Loading embeddings
-with open('ipc_embeddings.pkl', 'rb') as f:
+with open('ipc_voyage.pkl', 'rb') as f:
     ipc_embeddings = pickle.load(f)
 
-with open('ns_embeddings.pkl', 'rb') as f:
+with open('ns_voyage.pkl', 'rb') as f:
     ns_embeddings = pickle.load(f)
 
 # Streamlit app
