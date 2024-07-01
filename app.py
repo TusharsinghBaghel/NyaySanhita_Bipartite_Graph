@@ -5,60 +5,39 @@ import networkx as nx # A utility for creating graphs
 import matplotlib.pyplot as plt  # for plotting
 import pickle #Used pickle for storing the embeddings locally as .pkl file
 
-csv_file_path = 'ns_sections_final.csv'
-csv_file_path2 = 'IPC_sections_final.csv'
+# Load data function
+@st.cache_data
+def load_data(file_path):
+    sections = []
+    with open(file_path, mode='r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        next(reader, None)
+        for row in reader:
+            section_number = row[0]
+            content = row[1]
+            sections.append((section_number, content))
+    return sections
 
-ns_sections = []
-with open(csv_file_path, mode='r', encoding='utf-8') as file:
-    reader = csv.reader(file)
-    next(reader, None)
-    for row in reader:
-        section_number = row[0]
-        content = row[1]
-        ns_sections.append((section_number, content))
-
-#that means the index of section x of nyaysanhita is x-1
-ipc_sections = []
-with open(csv_file_path2, mode='r', encoding='utf-8') as file:
-    reader = csv.reader(file)
-    next(reader, None)
-    for row in reader:
-        section_number = row[0]
-        content = row[1]
-        ipc_sections.append((section_number, content))
-
-
-# ########### FOR CREATING NEW EMBEDDINGS ######################
-# ns_content = [text for _, text in ns_sections]
-# ipc_content = [text for _, text in ipc_sections]
-
-# model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-# ipc_embeddings = model.encode(ipc_content)
-# ns_embeddings = model.encode(ns_content)
-
-# with open('ipc_embeddings.pkl', 'wb') as f:
-#     pickle.dump(ipc_embeddings, f)
-
-# with open('ns_embeddings.pkl', 'wb') as f:
-#     pickle.dump(ns_embeddings, f)
-
+ns_sections = load_data('ns_sections_final.csv')
+ipc_sections = load_data('IPC_sections_final.csv')
 
 # Loading embeddings
-with open('ipc_voyage.pkl', 'rb') as f:
-    ipc_embeddings = pickle.load(f)
+@st.cache_data
+def load_embeddings(file_path):
+    with open(file_path, 'rb') as f:
+        return pickle.load(f)
 
-with open('ns_voyage.pkl', 'rb') as f:
-    ns_embeddings = pickle.load(f)
+ipc_embeddings = load_embeddings('ipc_voyage.pkl')
+ns_embeddings = load_embeddings('ns_voyage.pkl')
 
 # Streamlit app
 
-# st.markdown("<h1 style='color:white; text-align:center; font-weight:bold;'>IPC to Bhartiya Nyay Sanhita</h1>", unsafe_allow_html=True)
 st.markdown("""
     <h1 style='color:#ffffff; text-align:center; background-color:#333; padding:4px 15px; border-radius:10px; border:4px solid #4CAF50; margin-bottom:25px;'>
         Indian Penal Code to Bhartiya Nyay Sanhita
     </h1>""", unsafe_allow_html=True)
 
-# # #CSS
+# CSS
 st.markdown("""
     <style>
     body {
@@ -134,15 +113,20 @@ def plot_bipartite_graph():
     st.pyplot(plt)
 
 # Create the graph
-Graph = nx.Graph()
-Graph.add_nodes_from([f"ipc_{ipc_sections[i][0]}" for i in range(len(ipc_sections))], bipartite=0)
-Graph.add_nodes_from([f"ns_{ns_sections[i][0]}" for i in range(len(ns_sections))], bipartite=1)
+@st.cache_data
+def create_graph(threshold):
+    graph = nx.Graph()
+    graph.add_nodes_from([f"ipc_{ipc_sections[i][0]}" for i in range(len(ipc_sections))], bipartite=0)
+    graph.add_nodes_from([f"ns_{ns_sections[i][0]}" for i in range(len(ns_sections))], bipartite=1)
 
-for i, ipc_embedding in enumerate(ipc_embeddings):
-    similarities = util.pytorch_cos_sim(ipc_embedding, ns_embeddings)[0]
-    for j, similarity in enumerate(similarities):
-        if similarity > threshold:
-            Graph.add_edge(f"ipc_{ipc_sections[i][0]}", f"ns_{ns_sections[j][0]}", weight=float(similarity))
+    for i, ipc_embedding in enumerate(ipc_embeddings):
+        similarities = util.pytorch_cos_sim(ipc_embedding, ns_embeddings)[0]
+        for j, similarity in enumerate(similarities):
+            if similarity > threshold:
+                graph.add_edge(f"ipc_{ipc_sections[i][0]}", f"ns_{ns_sections[j][0]}", weight=float(similarity))
+    return graph
+
+Graph = create_graph(threshold)
 
 # Create columns for layout
 col1, col2, col3 = st.columns([3, 4, 3])
